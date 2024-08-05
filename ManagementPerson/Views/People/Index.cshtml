@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ManagementPerson.Models.Person>
+@{
+    ViewData["Title"] = "People Management";
+}
+
+<h1>People Management</h1>
+
+<p>
+    <a asp-action="Create">Add New Person</a>
+</p>
+
+<form asp-action="Index">
+    <div class="form-group">
+        <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Search by name">
+    </div>
+    <input type="submit" value="Search" class="btn btn-default" />
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Email Address</th>
+            <th>Role</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            var person = Model.ElementAt(i);
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@person.Name</td>
+                    <td>@person.PhoneNumber</td>
+                    <td>@person.EmailAddress</td>
+                    <td>@(person is Student ? "Student" : "Professor")</td>
+                    <td>@person.Address.Name, @person.Address.Number</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@person.PersonId">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@person.PersonId">Delete</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

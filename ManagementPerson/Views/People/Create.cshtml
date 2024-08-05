@@ -1,0 +1,86 @@
+﻿@model ManagementPerson.Models.CreatePersonViewModel
+
+@{
+    ViewData["Title"] = "Create Person";
+}
+
+<h1>Create Person</h1>
+
+<h4>Person</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailAddress" class="control-label"></label>
+                <input asp-for="EmailAddress" class="form-control" />
+                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressName" class="control-label"></label>
+                <input asp-for="AddressName" class="form-control" />
+                <span asp-validation-for="AddressName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressNumber" class="control-label"></label>
+                <input asp-for="AddressNumber" class="form-control" />
+                <span asp-validation-for="AddressNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Role" class="control-label">Role</label>
+                <select id="Role" asp-for="Role" class="form-control" onchange="showRoleSpecificFields()">
+                    <option value="Student">Student</option>
+                    <option value="Professor">Professor</option>
+                </select>
+            </div>
+            <div id="studentFields" style="display:none;">
+                <div class="form-group">
+                    <label asp-for="StudentNumber" class="control-label"></label>
+                    <input asp-for="StudentNumber" class="form-control" />
+                    <span asp-validation-for="StudentNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AverageMark" class="control-label"></label>
+                    <input asp-for="AverageMark" class="form-control" />
+                    <span asp-validation-for="AverageMark" class="text-danger"></span>
+                </div>
+            </div>
+            <div id="professorFields" style="display:none;">
+                <div class="form-group">
+                    <label asp-for="Salary" class="control-label"></label>
+                    <input asp-for="Salary" class="form-control" />
+                    <span asp-validation-for="Salary" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+        <script>
+            function showRoleSpecificFields() {
+                var role = document.getElementById("Role").value;
+                document.getElementById("studentFields").style.display = role === "Student" ? "block" : "none";
+                document.getElementById("professorFields").style.display = role === "Professor" ? "block" : "none";
+            }
+
+            // Initialize form with correct fields shown
+            showRoleSpecificFields();
+        </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
